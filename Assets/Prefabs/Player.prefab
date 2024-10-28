@@ -168,4 +168,4 @@ MonoBehaviour:
   movePoint: {fileID: 6853658271255312889}
   moveCollider:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
