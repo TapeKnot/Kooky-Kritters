@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 242672120}
   - component: {fileID: 242672122}
   - component: {fileID: 242672121}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: Obstacles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -456,7 +456,7 @@ Tilemap:
   m_AnimatedTiles: {}
   m_TileAssetArray:
   - m_RefCount: 24
-    m_Data: {fileID: 11400000, guid: aa7364937d21e46438437bfdd7555475, type: 2}
+    m_Data: {fileID: 11400000, guid: be60d92ec5bd27f4a8dc2484379ac382, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 24
     m_Data: {fileID: 7482667652216324306, guid: 3ef0084d2e79f1f459fb6262f1896aea, type: 3}
@@ -481,7 +481,7 @@ Tilemap:
       e33: 1
   m_TileColorArray:
   - m_RefCount: 24
-    m_Data: {r: 0.011575947, g: 0, b: 0.066037714, a: 1}
+    m_Data: {r: 0.509434, g: 0.509434, b: 0.509434, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -3978,6 +3978,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2841788616065099035, guid: 5f6d8d826f79599409581b7e7a324dd1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7095721840299200953, guid: 5f6d8d826f79599409581b7e7a324dd1, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7095721840299200953, guid: 5f6d8d826f79599409581b7e7a324dd1, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7095721840299200953, guid: 5f6d8d826f79599409581b7e7a324dd1, type: 3}
+      propertyPath: m_Color.r
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8876362223842198071, guid: 5f6d8d826f79599409581b7e7a324dd1, type: 3}

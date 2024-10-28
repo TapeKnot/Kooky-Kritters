@@ -4,7 +4,10 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private Transform movePoint;
-    public LayerMask moveCollider;
+    [SerializeField] private LayerMask moveCollider;
+    [SerializeField] private bool critterPlaceMode = false;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Object centipede;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -26,7 +29,14 @@ public class Player : MonoBehaviour
             {
                 if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(moveHorizontal, 0f, 0f), 0.2f, moveCollider))
                 {
-                    movePoint.position += new Vector3(moveHorizontal, 0f, 0f);
+                    if (critterPlaceMode)
+                    {
+                        //Instantiate(centipede, new(moveHorizontal, 0f, 0f), new()); // TODO: THING
+                    }
+                    else
+                    {
+                        movePoint.position += new Vector3(moveHorizontal, 0f, 0f);
+                    }
                 }
                 
             }
@@ -36,14 +46,30 @@ public class Player : MonoBehaviour
 
                 if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(0f, moveVertical, 0f), 0.2f, moveCollider))
                 {
-                    movePoint.position += new Vector3(0f, moveVertical, 0f);
+                    if (critterPlaceMode)
+                    {
+
+                    }
+                    else
+                    {
+                        movePoint.position += new Vector3(0f, moveVertical, 0f);
+                    }
                 }
             }
-        }
 
-        if (Input.GetButtonDown("Space"))
-        {
+            if (Input.GetButtonDown("Critter Place Mode"))
+            {
+                critterPlaceMode = !critterPlaceMode; // Toggle mode
 
+                if (critterPlaceMode)
+                {
+                    spriteRenderer.color = Color.yellow;
+                }
+                else
+                {
+                    spriteRenderer.color = Color.cyan;
+                }
+            }
         }
     }
 }
