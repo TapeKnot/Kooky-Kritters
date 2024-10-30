@@ -6,9 +6,9 @@ public class Player : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private Transform movePoint;
     [SerializeField] private Transform lookPoint;
-    [SerializeField] private LayerMask wallCollider;
-    [SerializeField] private LayerMask obstacleCollider;
-    [SerializeField] private LayerMask centipedeCollider;
+    [SerializeField] private LayerMask wallLayer;
+    [SerializeField] private LayerMask obstacleLayer;
+    [SerializeField] private LayerMask centipedeLayer;
     [SerializeField] private bool critterMode = false;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private GameObject centipede;
@@ -31,14 +31,14 @@ public class Player : MonoBehaviour
             float moveVertical = Input.GetAxisRaw("Vertical");
             Vector3 verticalOffset = new(0f, moveVertical, 0f);
 
-            if (Mathf.Abs(moveHorizontal) == 1f && !Physics2D.OverlapCircle(movePoint.position + horizontalOffset, 0.2f, wallCollider))
+            if (Mathf.Abs(moveHorizontal) == 1f && !Physics2D.OverlapCircle(movePoint.position + horizontalOffset, 0.2f, wallLayer))
             {
                 // Want to prevent movePoint from going onto obstacle tiles UNLESS there is also a centipede tile there OR Critter Mode is on
-                if (!Physics2D.OverlapCircle(movePoint.position + horizontalOffset, 0.2f, obstacleCollider))
+                if (!Physics2D.OverlapCircle(movePoint.position + horizontalOffset, 0.2f, obstacleLayer))
                 {
                     movePoint.position += horizontalOffset;
                 }
-                else if (Physics2D.OverlapCircle(movePoint.position + horizontalOffset, 0.2f, centipedeCollider) || critterMode)
+                else if (Physics2D.OverlapCircle(movePoint.position + horizontalOffset, 0.2f, centipedeLayer) || critterMode)
                 {
                     movePoint.position += horizontalOffset;
                 }
@@ -59,14 +59,14 @@ public class Player : MonoBehaviour
                     movePoint.position -= horizontalOffset; // Do not move player
                 }
             }
-            else if (Mathf.Abs(moveVertical) == 1f && !Physics2D.OverlapCircle(movePoint.position + verticalOffset, 0.2f, wallCollider))
+            else if (Mathf.Abs(moveVertical) == 1f && !Physics2D.OverlapCircle(movePoint.position + verticalOffset, 0.2f, wallLayer))
             {
                 // Want to prevent movePoint from going onto obstacle tiles UNLESS there is also a centipede tile there OR Critter Mode is on
-                if (!Physics2D.OverlapCircle(movePoint.position + verticalOffset, 0.2f, obstacleCollider))
+                if (!Physics2D.OverlapCircle(movePoint.position + verticalOffset, 0.2f, obstacleLayer))
                 {
                     movePoint.position += verticalOffset;
                 }
-                else if (Physics2D.OverlapCircle(movePoint.position + verticalOffset, 0.2f, centipedeCollider) || critterMode)
+                else if (Physics2D.OverlapCircle(movePoint.position + verticalOffset, 0.2f, centipedeLayer) || critterMode)
                 {
                     movePoint.position += verticalOffset;
                 }
