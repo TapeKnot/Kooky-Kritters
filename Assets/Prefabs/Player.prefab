@@ -167,13 +167,13 @@ MonoBehaviour:
   moveSpeed: 5
   movePoint: {fileID: 6853658271255312889}
   lookPoint: {fileID: 0}
-  wallCollider:
+  wallLayer:
     serializedVersion: 2
     m_Bits: 8
-  obstacleCollider:
+  obstacleLayer:
     serializedVersion: 2
     m_Bits: 64
-  centipedeCollider:
+  centipedeLayer:
     serializedVersion: 2
     m_Bits: 128
   critterMode: 0
