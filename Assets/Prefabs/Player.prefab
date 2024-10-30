@@ -168,17 +168,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   critterMode: 0
+  numCentipedes: 3
   movePoint: {fileID: 6853658271255312889}
   lookPoint: {fileID: 0}
-  wallLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  centipedeLayer:
-    serializedVersion: 2
-    m_Bits: 128
   spriteRenderer: {fileID: 7095721840299200953}
   centipede: {fileID: 1684667921504059436, guid: 81bd2598306f22e4bad51145eaeec320, type: 3}
 --- !u!61 &1701597480740788445

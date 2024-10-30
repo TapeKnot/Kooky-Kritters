@@ -7,15 +7,17 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private bool critterMode = false;
+    [SerializeField] private int numCentipedes;
+    [SerializeField] private int numWaterBugs;
+    [SerializeField] private int numFlies;
 
     [SerializeField] private Transform movePoint;
     [SerializeField] private Transform lookPoint;
 
-    [SerializeField] private LayerMask wallLayer;
-    [SerializeField] private LayerMask obstacleLayer;
-    [SerializeField] private LayerMask centipedeLayer;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private GameObject centipede;
+    [SerializeField] private GameObject waterBug;
+    [SerializeField] private GameObject fly;
 
     private void Awake()
     {
@@ -44,10 +46,10 @@ public class Player : MonoBehaviour
             float moveVertical = Input.GetAxisRaw("Vertical");
             Vector3 verticalOffset = new(0f, moveVertical, 0f);
 
-            if (Mathf.Abs(moveHorizontal) == 1f && !Physics2D.OverlapCircle(movePoint.position + horizontalOffset, 0.2f, wallLayer))
+            if (Mathf.Abs(moveHorizontal) == 1f && !Physics2D.OverlapCircle(movePoint.position + horizontalOffset, 0.2f, LayerMask.GetMask("Wall")))
             {
                 // Want to prevent movePoint from going onto obstacle tiles UNLESS there is also a centipede tile there OR Critter Mode is on
-                if (!Physics2D.OverlapCircle(movePoint.position + horizontalOffset, 0.2f, obstacleLayer) || Physics2D.OverlapCircle(movePoint.position + horizontalOffset, 0.2f, centipedeLayer) || critterMode)
+                if (!Physics2D.OverlapCircle(movePoint.position + horizontalOffset, 0.2f, LayerMask.GetMask("Hole")) || Physics2D.OverlapCircle(movePoint.position + horizontalOffset, 0.2f, LayerMask.GetMask("Centipede")) || critterMode)
                 {
                     movePoint.position += horizontalOffset;
                 }
@@ -64,14 +66,19 @@ public class Player : MonoBehaviour
                         rotation = 90;
                     }
 
-                    PlaceCentipede(movePoint.position, rotation);
+                    if (numCentipedes > 0)
+                    {
+                        PlaceCentipede(movePoint.position, rotation);
+                        numCentipedes--;
+                    }
+
                     movePoint.position -= horizontalOffset; // Do not move player
                 }
             }
-            else if (Mathf.Abs(moveVertical) == 1f && !Physics2D.OverlapCircle(movePoint.position + verticalOffset, 0.2f, wallLayer))
+            else if (Mathf.Abs(moveVertical) == 1f && !Physics2D.OverlapCircle(movePoint.position + verticalOffset, 0.2f, LayerMask.GetMask("Wall")))
             {
                 // Want to prevent movePoint from going onto obstacle tiles UNLESS there is also a centipede tile there OR Critter Mode is on
-                if (!Physics2D.OverlapCircle(movePoint.position + verticalOffset, 0.2f, obstacleLayer) || Physics2D.OverlapCircle(movePoint.position + verticalOffset, 0.2f, centipedeLayer) || critterMode)
+                if (!Physics2D.OverlapCircle(movePoint.position + verticalOffset, 0.2f, LayerMask.GetMask("Hole")) || Physics2D.OverlapCircle(movePoint.position + verticalOffset, 0.2f, LayerMask.GetMask("Centipede")) || critterMode)
                 {
                     movePoint.position += verticalOffset;
                 }
@@ -88,14 +95,21 @@ public class Player : MonoBehaviour
                         rotation = 180;
                     }
 
-                    PlaceCentipede(movePoint.position, rotation);
+                    if (numCentipedes > 0)
+                    {
+                        PlaceCentipede(movePoint.position, rotation);
+                        numCentipedes--;
+                    }
                     movePoint.position -= verticalOffset; // Do not move player
                 }
             }
 
             if (Input.GetButtonDown("Critter Place Mode"))
             {
-                ToggleCritterMode();
+                if (numCentipedes + numWaterBugs + numFlies > 0)
+                {
+                    ToggleCritterMode();
+                }
             }
         }
     }
