@@ -7,17 +7,18 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private bool critterMode = false;
-    [SerializeField] private int numCentipedes;
-    [SerializeField] private int numWaterBugs;
-    [SerializeField] private int numFlies;
+    private const int CENTIPEDE = 0;
+    private const int WATERBUG = 1;
+    private const int FLY = 2;
 
-    [SerializeField] private Transform movePoint;
-    [SerializeField] private Transform lookPoint;
+    [SerializeField] private int[] numCritters = new int[3];
+    [SerializeField] private GameObject[] critters = new GameObject[3];
+    private int activeCritterIdx;
 
     [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private GameObject centipede;
-    [SerializeField] private GameObject waterBug;
-    [SerializeField] private GameObject fly;
+
+    private Vector3 movePoint;
+    
 
     private void Awake()
     {
@@ -31,92 +32,72 @@ public class Player : MonoBehaviour
             Destroy(gameObject);
         }
 
-        movePoint.parent = null;
+        movePoint = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, movePoint, moveSpeed * Time.deltaTime);
 
-        if (Vector3.Distance(transform.position, movePoint.position) <= 0.05f)
+        if (Vector3.Distance(transform.position, movePoint) == 0f)
         {
-            float moveHorizontal = Input.GetAxisRaw("Horizontal");
-            Vector3 horizontalOffset = new(moveHorizontal, 0f, 0f);
-            float moveVertical = Input.GetAxisRaw("Vertical");
-            Vector3 verticalOffset = new(0f, moveVertical, 0f);
-
-            if (Mathf.Abs(moveHorizontal) == 1f && !Physics2D.OverlapCircle(movePoint.position + horizontalOffset, 0.2f, LayerMask.GetMask("Wall")))
+            Vector3 offset = new();
+            offset.x += Input.GetAxisRaw("Horizontal");
+            if (offset.magnitude == 0)
             {
-                // Want to prevent movePoint from going onto obstacle tiles UNLESS there is also a centipede tile there OR Critter Mode is on
-                if (!Physics2D.OverlapCircle(movePoint.position + horizontalOffset, 0.2f, LayerMask.GetMask("Hole")) || Physics2D.OverlapCircle(movePoint.position + horizontalOffset, 0.2f, LayerMask.GetMask("Centipede")) || critterMode)
-                {
-                    movePoint.position += horizontalOffset;
-                }
+                offset.y += Input.GetAxisRaw("Vertical");
+            }
 
+            Vector3 offsetPos = movePoint + offset;
+
+            if (offset.magnitude == 1f && !Physics2D.OverlapCircle(offsetPos, 0.2f, LayerMask.GetMask("Wall")))
+            {
                 if (critterMode)
                 {
-                    int rotation;
-                    if (moveHorizontal > 0f)
+                    int rotation = 0;
+                    if (offset.x > 0)
                     {
                         rotation = 270;
                     }
-                    else
+                    else if (offset.x < 0)
                     {
                         rotation = 90;
                     }
-
-                    if (numCentipedes > 0)
-                    {
-                        PlaceCentipede(movePoint.position, rotation);
-                        numCentipedes--;
-                    }
-
-                    movePoint.position -= horizontalOffset; // Do not move player
-                }
-            }
-            else if (Mathf.Abs(moveVertical) == 1f && !Physics2D.OverlapCircle(movePoint.position + verticalOffset, 0.2f, LayerMask.GetMask("Wall")))
-            {
-                // Want to prevent movePoint from going onto obstacle tiles UNLESS there is also a centipede tile there OR Critter Mode is on
-                if (!Physics2D.OverlapCircle(movePoint.position + verticalOffset, 0.2f, LayerMask.GetMask("Hole")) || Physics2D.OverlapCircle(movePoint.position + verticalOffset, 0.2f, LayerMask.GetMask("Centipede")) || critterMode)
-                {
-                    movePoint.position += verticalOffset;
-                }
-
-                if (critterMode)
-                {
-                    int rotation;
-                    if (moveVertical > 0f)
-                    {
-                        rotation = 0;
-                    }
-                    else
+                    else if (offset.y < 0)
                     {
                         rotation = 180;
                     }
-
-                    if (numCentipedes > 0)
-                    {
-                        PlaceCentipede(movePoint.position, rotation);
-                        numCentipedes--;
-                    }
-                    movePoint.position -= verticalOffset; // Do not move player
+                    
+                    PlaceCritter(activeCritterIdx, offsetPos, rotation);
+                    numCritters[activeCritterIdx]--;
+                }
+                // Only move if the target area is not blocked by a hole OR a centipede is over the hole OR Critter Mode is enabled
+                else if (!Physics2D.OverlapCircle(offsetPos, 0.2f, LayerMask.GetMask("Hole")) || Physics2D.OverlapCircle(offsetPos, 0.2f, LayerMask.GetMask("Centipede")) || critterMode)
+                {
+                    movePoint = offsetPos;
                 }
             }
 
-            if (Input.GetButtonDown("Critter Place Mode"))
+            if (Input.GetButtonDown("PlaceCentipede") && numCritters[CENTIPEDE] > 0)
             {
-                if (numCentipedes + numWaterBugs + numFlies > 0)
-                {
-                    ToggleCritterMode();
-                }
+                ToggleCritterMode(CENTIPEDE);
+            }
+            else if (Input.GetButtonDown("PlaceWaterBug") && numCritters[WATERBUG] > 0)
+            {
+                ToggleCritterMode(WATERBUG);
+            }
+            else if (Input.GetButtonDown("PlaceFly") && numCritters[FLY] > 0)
+            {
+                ToggleCritterMode(FLY);
             }
         }
     }
 
-    private void ToggleCritterMode()
+    private void ToggleCritterMode(int critter)
     {
         critterMode = !critterMode;
+        activeCritterIdx = critter;
 
         if (critterMode)
         {
@@ -128,11 +109,11 @@ public class Player : MonoBehaviour
         }
     }
 
-    // Place Centipede at given position and rotation, then toggle Critter Mode
-    private void PlaceCentipede(Vector3 position, int rotation)
+    // Place Critter at given position and rotation, then toggle Critter Mode
+    private void PlaceCritter(int critterIdx, Vector3 position, int rotation)
     {
-        GameObject spawnedCritter = Instantiate(centipede, position, Quaternion.identity);
+        GameObject spawnedCritter = Instantiate(critters[critterIdx], position, Quaternion.identity);
         spawnedCritter.transform.Rotate(0, 0, rotation);
-        ToggleCritterMode();
+        ToggleCritterMode(critterIdx);
     }
 }
