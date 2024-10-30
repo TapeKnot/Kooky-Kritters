@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 2841788616065099035}
   - component: {fileID: 3458137565953629260}
   - component: {fileID: 1701597480740788445}
-  - component: {fileID: 5620685321699837865}
+  - component: {fileID: 3717615247756312804}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  critterMode: 0
   movePoint: {fileID: 6853658271255312889}
   lookPoint: {fileID: 0}
   wallLayer:
@@ -178,7 +179,6 @@ MonoBehaviour:
   centipedeLayer:
     serializedVersion: 2
     m_Bits: 128
-  critterMode: 0
   spriteRenderer: {fileID: 7095721840299200953}
   centipede: {fileID: 1684667921504059436, guid: 81bd2598306f22e4bad51145eaeec320, type: 3}
 --- !u!61 &1701597480740788445
@@ -211,7 +211,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -227,7 +227,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.75, y: 0.75}
   m_EdgeRadius: 0
---- !u!50 &5620685321699837865
+--- !u!50 &3717615247756312804
 Rigidbody2D:
   serializedVersion: 5
   m_ObjectHideFlags: 0

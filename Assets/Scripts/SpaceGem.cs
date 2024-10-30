@@ -2,20 +2,11 @@ using UnityEngine;
 
 public class SpaceGem : MonoBehaviour
 {
-    public GameObject player;
-    [SerializeField] private LevelExit exit;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
+    public static event System.Action OnSpaceGemDestroy = delegate { };
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Debug.Log("Collided with: " + collision.name);
-        // Check if the object entering the trigger is the player
-        if (collision.transform.root.gameObject == player)
+        if (collision.gameObject.CompareTag("Player"))
         {
             DestroyGem();
         }
@@ -25,11 +16,9 @@ public class SpaceGem : MonoBehaviour
     {
         // Deactivate the gem object
         gameObject.SetActive(false);
+        OnSpaceGemDestroy();
 
         Debug.Log("Gem destroyed! Exit is now accessible.");
-        Debug.Log("Unlocking exit...");
-
-        exit.UnlockExit();
     }
 
 }

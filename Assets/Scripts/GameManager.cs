@@ -3,10 +3,23 @@ using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
+
     [SerializeField] private Transform cam;
-    [SerializeField] private GridManager gridManager;
-    [SerializeField] private Player player;
     [SerializeField] private Tilemap levelGround;
+
+    private void Awake()
+    {
+        // Singleton enforcement
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

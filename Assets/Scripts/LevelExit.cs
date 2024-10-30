@@ -3,39 +3,44 @@ using UnityEngine;
 
 public class LevelExit : MonoBehaviour
 {
-    public GameObject player;
-    [SerializeField] private GameObject blockade;
-    private bool isExitAccessible = false;
+    public static LevelExit instance;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private SpriteRenderer blockade;
+    private bool unlocked = false;
+
+    private void Awake()
     {
-        isExitAccessible = false;
+        // Singleton enforcement
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        SpaceGem.OnSpaceGemDestroy += UnlockExit;
     }
-    public void UnlockExit()
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        isExitAccessible = true;
-        blockade.SetActive(false);
-        Debug.Log("The exit is now unlocked!");
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log("collision");
         // Only log when the player collides with the "Vine" (X block)
-        if (!isExitAccessible &&
-            collision.gameObject.name == "Vine" &&
-            collision.transform.root.gameObject == player)
+        if (collision.gameObject.CompareTag("Player") && !unlocked)
         {
             Debug.Log("The exit is blocked! Destroy the space gem to unblock.");
         }
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        // Debug.Log("Collided with: " + collision.name);
-        // Check if the object entering the trigger is the player
-        if (collision.transform.root.gameObject == player && isExitAccessible) {
+
+        if (collision.gameObject.CompareTag("Player") && unlocked) {
             LevelComplete();
         }
+    }
+
+    public void UnlockExit()
+    {
+        unlocked = true;
+        blockade.enabled = false;
+        Debug.Log("The exit is now unlocked!");
     }
 
     private void LevelComplete()
