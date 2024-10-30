@@ -3,16 +3,12 @@ using UnityEngine;
 public class SpaceGem : MonoBehaviour
 {
     public GameObject player;
-    public GameObject vineBlock;
-    [SerializeField] private LevelExit levelExit;
+    [SerializeField] private LevelExit exit;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (vineBlock != null)
-        {
-            vineBlock.SetActive(true);
-        }
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -30,18 +26,10 @@ public class SpaceGem : MonoBehaviour
         // Deactivate the gem object
         gameObject.SetActive(false);
 
-        // Remove the vine block (X)
-        if (vineBlock != null)
-        {
-            vineBlock.SetActive(false);
-            Debug.Log("Gem destroyed! Exit is now accessible.");
-        }
+        Debug.Log("Gem destroyed! Exit is now accessible.");
+        Debug.Log("Unlocking exit...");
 
-        if (levelExit != null)
-        {   
-            Debug.Log("Unlocking exit...");
-            levelExit.UnlockExit();
-        }
+        exit.UnlockExit();
     }
 
 }
