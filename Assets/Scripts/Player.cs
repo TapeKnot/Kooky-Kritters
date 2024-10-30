@@ -1,13 +1,17 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private Transform movePoint;
-    [SerializeField] private LayerMask moveCollider;
-    [SerializeField] private bool critterPlaceMode = false;
+    [SerializeField] private Transform lookPoint;
+    [SerializeField] private LayerMask wallCollider;
+    [SerializeField] private LayerMask obstacleCollider;
+    [SerializeField] private LayerMask centipedeCollider;
+    [SerializeField] private bool critterMode = false;
     [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private Object centipede;
+    [SerializeField] private GameObject centipede;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -23,53 +27,93 @@ public class Player : MonoBehaviour
         if (Vector3.Distance(transform.position, movePoint.position) <= 0.05f)
         {
             float moveHorizontal = Input.GetAxisRaw("Horizontal");
+            Vector3 horizontalOffset = new(moveHorizontal, 0f, 0f);
             float moveVertical = Input.GetAxisRaw("Vertical");
+            Vector3 verticalOffset = new(0f, moveVertical, 0f);
 
-            if (Mathf.Abs(moveHorizontal) == 1f)
+            if (Mathf.Abs(moveHorizontal) == 1f && !Physics2D.OverlapCircle(movePoint.position + horizontalOffset, 0.2f, wallCollider))
             {
-                if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(moveHorizontal, 0f, 0f), 0.2f, moveCollider))
+                // Want to prevent movePoint from going onto obstacle tiles UNLESS there is also a centipede tile there OR Critter Mode is on
+                if (!Physics2D.OverlapCircle(movePoint.position + horizontalOffset, 0.2f, obstacleCollider))
                 {
-                    if (critterPlaceMode)
-                    {
-                        //Instantiate(centipede, new(moveHorizontal, 0f, 0f), new()); // TODO: THING
-                    }
-                    else
-                    {
-                        movePoint.position += new Vector3(moveHorizontal, 0f, 0f);
-                    }
+                    movePoint.position += horizontalOffset;
                 }
-                
-            }
-
-            else if (Mathf.Abs(moveVertical) == 1f)
-            {
-
-                if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(0f, moveVertical, 0f), 0.2f, moveCollider))
+                else if (Physics2D.OverlapCircle(movePoint.position + horizontalOffset, 0.2f, centipedeCollider) || critterMode)
                 {
-                    if (critterPlaceMode)
-                    {
+                    movePoint.position += horizontalOffset;
+                }
 
+                if (critterMode)
+                {
+                    int rotation;
+                    if (moveHorizontal > 0f)
+                    {
+                        rotation = 270;
                     }
                     else
                     {
-                        movePoint.position += new Vector3(0f, moveVertical, 0f);
+                        rotation = 90;
                     }
+
+                    PlaceCentipede(movePoint.position, rotation);
+                    movePoint.position -= horizontalOffset; // Do not move player
+                }
+            }
+            else if (Mathf.Abs(moveVertical) == 1f && !Physics2D.OverlapCircle(movePoint.position + verticalOffset, 0.2f, wallCollider))
+            {
+                // Want to prevent movePoint from going onto obstacle tiles UNLESS there is also a centipede tile there OR Critter Mode is on
+                if (!Physics2D.OverlapCircle(movePoint.position + verticalOffset, 0.2f, obstacleCollider))
+                {
+                    movePoint.position += verticalOffset;
+                }
+                else if (Physics2D.OverlapCircle(movePoint.position + verticalOffset, 0.2f, centipedeCollider) || critterMode)
+                {
+                    movePoint.position += verticalOffset;
+                }
+
+                if (critterMode)
+                {
+                    int rotation;
+                    if (moveVertical > 0f)
+                    {
+                        rotation = 0;
+                    }
+                    else
+                    {
+                        rotation = 180;
+                    }
+
+                    PlaceCentipede(movePoint.position, rotation);
+                    movePoint.position -= verticalOffset; // Do not move player
                 }
             }
 
             if (Input.GetButtonDown("Critter Place Mode"))
             {
-                critterPlaceMode = !critterPlaceMode; // Toggle mode
-
-                if (critterPlaceMode)
-                {
-                    spriteRenderer.color = Color.yellow;
-                }
-                else
-                {
-                    spriteRenderer.color = Color.cyan;
-                }
+                ToggleCritterMode();
             }
         }
+    }
+
+    private void ToggleCritterMode()
+    {
+        critterMode = !critterMode;
+
+        if (critterMode)
+        {
+            spriteRenderer.color = Color.yellow;
+        }
+        else
+        {
+            spriteRenderer.color = Color.cyan;
+        }
+    }
+
+    // Place Centipede at given position and rotation, then toggle Critter Mode
+    private void PlaceCentipede(Vector3 position, int rotation)
+    {
+        GameObject spawnedCritter = Instantiate(centipede, position, Quaternion.identity);
+        spawnedCritter.transform.Rotate(0, 0, rotation);
+        ToggleCritterMode();
     }
 }

@@ -106,7 +106,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 604202659
   m_SortingLayer: 3
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -166,8 +166,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   movePoint: {fileID: 6853658271255312889}
-  moveCollider:
+  lookPoint: {fileID: 0}
+  wallCollider:
     serializedVersion: 2
     m_Bits: 8
-  critterPlaceMode: 0
+  obstacleCollider:
+    serializedVersion: 2
+    m_Bits: 64
+  centipedeCollider:
+    serializedVersion: 2
+    m_Bits: 128
+  critterMode: 0
   spriteRenderer: {fileID: 7095721840299200953}
+  centipede: {fileID: 1684667921504059436, guid: 81bd2598306f22e4bad51145eaeec320, type: 3}
