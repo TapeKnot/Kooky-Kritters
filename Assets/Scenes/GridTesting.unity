@@ -4035,6 +4035,18 @@ PrefabInstance:
       propertyPath: moveCollider.m_Bits
       value: 136
       objectReference: {fileID: 0}
+    - target: {fileID: 3458137565953629260, guid: 5f6d8d826f79599409581b7e7a324dd1, type: 3}
+      propertyPath: 'numCritters.Array.data[0]'
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 3458137565953629260, guid: 5f6d8d826f79599409581b7e7a324dd1, type: 3}
+      propertyPath: 'numCritters.Array.data[1]'
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 3458137565953629260, guid: 5f6d8d826f79599409581b7e7a324dd1, type: 3}
+      propertyPath: 'numCritters.Array.data[2]'
+      value: 99
+      objectReference: {fileID: 0}
     - target: {fileID: 7095721840299200953, guid: 5f6d8d826f79599409581b7e7a324dd1, type: 3}
       propertyPath: m_Color.b
       value: 1
