@@ -10,6 +10,7 @@ public class SpaceGem : MonoBehaviour
         {
             DestroyGem();
         }
+        audioManager.PlaySFX(audioManager.gemBreak); 
     }
 
     public void DestroyGem()
@@ -21,4 +22,10 @@ public class SpaceGem : MonoBehaviour
         Debug.Log("Gem destroyed! Exit is now accessible.");
     }
 
+AudioManager audioManager;
+private void Awake()
+{
+    audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+
+}
 }

@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Audio
   layers:
   - Default
   - TransparentFX
@@ -14,7 +15,6 @@ TagManager:
   - Obstacle
   - Centipede
   - ExitVine
-  - 
   - 
   - 
   - 
