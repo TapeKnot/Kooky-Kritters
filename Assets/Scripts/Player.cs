@@ -17,12 +17,9 @@ public class Player : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private GameObject centipede;
     [SerializeField] private AudioClip gemBreak;
-AudioManager audioManager;
-private void Foot()
-{
-    audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
 
-}
+
+
     private void Awake()
     {
         // Singleton enforcement
@@ -57,7 +54,7 @@ private void Foot()
                 {
                     movePoint.position += horizontalOffset;
                 }
-                
+
                 if (critterMode)
                 {
                     int rotation;
@@ -69,14 +66,10 @@ private void Foot()
                     {
                         rotation = 90;
                     }
-                
 
                     PlaceCentipede(movePoint.position, rotation);
                     movePoint.position -= horizontalOffset; // Do not move player
-                    
                 }
-                
-                
             }
             else if (Mathf.Abs(moveVertical) == 1f && !Physics2D.OverlapCircle(movePoint.position + verticalOffset, 0.2f, wallLayer))
             {
@@ -131,5 +124,5 @@ private void Foot()
         spawnedCritter.transform.Rotate(0, 0, rotation);
         ToggleCritterMode();
     }
-   
+    
 }
