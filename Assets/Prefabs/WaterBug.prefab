@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4999078189239913116}
   - component: {fileID: 4935041632506213109}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 604202659
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0, g: 0.44959506, b: 0.83137256, a: 1}
@@ -97,7 +97,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2483122321963761715}
   - component: {fileID: 7062447711972290364}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: WaterBug
   m_TagString: Untagged
   m_Icon: {fileID: 0}

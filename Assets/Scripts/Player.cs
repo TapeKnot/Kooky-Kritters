@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] private LayerMask[] moveableLayers;
+    [SerializeField] private LayerMask[] unnmoveableLayers;
+
     public static Player instance;
 
     [SerializeField] private float moveSpeed = 5f;
@@ -51,7 +54,7 @@ public class Player : MonoBehaviour
 
             Vector3 offsetPos = movePoint + offset;
 
-            if (offset.magnitude == 1f && !Physics2D.OverlapCircle(offsetPos, 0.2f, LayerMask.GetMask("Wall")))
+            if (offset.magnitude == 1f && IsInBounds(offsetPos))
             {
                 if (critterMode)
                 {
@@ -72,8 +75,7 @@ public class Player : MonoBehaviour
                     PlaceCritter(activeCritterIdx, offsetPos, rotation);
                     numCritters[activeCritterIdx]--;
                 }
-                // Only move if the target area is not blocked by a hole OR a centipede is over the hole OR Critter Mode is enabled
-                else if (!Physics2D.OverlapCircle(offsetPos, 0.2f, LayerMask.GetMask("Hole")) || Physics2D.OverlapCircle(offsetPos, 0.2f, LayerMask.GetMask("Centipede")) || critterMode)
+                else if (IsMoveableTile(offsetPos))
                 {
                     movePoint = offsetPos;
                 }
@@ -115,5 +117,18 @@ public class Player : MonoBehaviour
         GameObject spawnedCritter = Instantiate(critters[critterIdx], position, Quaternion.identity);
         spawnedCritter.transform.Rotate(0, 0, rotation);
         ToggleCritterMode(critterIdx);
+    }
+
+    // Checks if position is on a moveable tile
+    private bool IsMoveableTile(Vector3 position)
+    {
+        return (!Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("Water")) || Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("WaterBug"))) && (!Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("Hole"))
+            || Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("Centipede")));
+    }
+
+    // Checks if position is in world bounds AKA on ground tile
+    private bool IsInBounds(Vector3 position)
+    {
+        return Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("Ground"));
     }
 }
