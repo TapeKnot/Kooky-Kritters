@@ -8,6 +8,7 @@ public class AudioManager : MonoBehaviour
 [Header("---------- Audio Clip ----------")] 
 public AudioClip footstepsDirt;
 public AudioClip gemBreak;
+public AudioClip waterBug;
 
 
  public void PlaySFX(AudioClip clip)
