@@ -2,34 +2,31 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-  [Header("---------- Audio Source ----------")]
-[SerializeField] AudioSource SFXSource;
+    public static AudioManager instance;
 
-[Header("---------- Audio Clip ----------")] 
-public AudioClip footstepsDirt;
-public AudioClip gemBreak;
+    [Header("---------- Audio Source ----------")]
+    [SerializeField] AudioSource SFXSource;
+
+    [Header("---------- Audio Clip ----------")] 
+    public AudioClip footstepsDirt;
+    public AudioClip gemBreak;
 public AudioClip waterBug;
 
-
- public void PlaySFX(AudioClip clip)
- {
-    SFXSource.PlayOneShot(clip);
- }
-
-
-
-
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Awake()
     {
-        
+        // Singleton enforcement
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void PlaySFX(AudioClip clip)
     {
-        
+        SFXSource.PlayOneShot(clip);
     }
 }

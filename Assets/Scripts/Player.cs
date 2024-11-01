@@ -28,10 +28,6 @@ public class Player : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
 
     private Vector3 movePoint;
-    
-    [SerializeField] private AudioClip gemBreak;
-
-
 
     private void Awake()
     {
@@ -78,7 +74,7 @@ public class Player : MonoBehaviour
             {
                 if (sliding) slideVector = offset;
                 movePoint = offsetPos;
-                // TODO: Play footstep audio
+                AudioManager.instance.PlaySFX(AudioManager.instance.footstepsDirt);
             }
 
             if (Input.GetButtonDown("PlaceCentipede") && numCentipedes > 0)

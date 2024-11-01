@@ -10,22 +10,15 @@ public class SpaceGem : MonoBehaviour
         {
             DestroyGem();
         }
-        audioManager.PlaySFX(audioManager.gemBreak); 
     }
 
     public void DestroyGem()
     {
         // Deactivate the gem object
         gameObject.SetActive(false);
+        AudioManager.instance.PlaySFX(AudioManager.instance.gemBreak);
         OnSpaceGemDestroy();
 
         Debug.Log("Gem destroyed! Exit is now accessible.");
     }
-
-AudioManager audioManager;
-private void Awake()
-{
-    audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
-
-}
 }
