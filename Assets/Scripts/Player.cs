@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
@@ -10,6 +11,10 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private bool critterMode = false;
+
+    private bool sliding = false;
+    private Vector3 slideVector;
+
     [SerializeField] private enum Critter {Centipede, WaterBug, Fly};
     [SerializeField] private Critter active;
 
@@ -47,6 +52,7 @@ public class Player : MonoBehaviour
 
         if (Vector3.Distance(transform.position, movePoint) == 0f)
         {
+
             Vector3 offset = new();
             offset.x += Input.GetAxisRaw("Horizontal");
             if (offset.magnitude == 0)
@@ -56,41 +62,20 @@ public class Player : MonoBehaviour
 
             Vector3 offsetPos = movePoint + offset;
 
-            if (offset.magnitude == 1f && IsMoveableTile(offsetPos))
+            if (sliding && IsMoveableTile(movePoint + slideVector))
             {
-                movePoint = offsetPos;
+                movePoint += slideVector;
+                // TODO: Play slide audio
             }
-
-
-
+            else if (offset.magnitude == 1f && critterMode && IsPlaceableTile(offsetPos))
             {
-                if (critterMode)
-                {
-                    int rotation = 0;
-                    if (offset.x > 0)
-                    {
-                        rotation = 270;
-                    }
-                    else if (offset.x < 0)
-                    {
-                        rotation = 90;
-                    }
-                    else if (offset.y < 0)
-                    {
-                        rotation = 180;
-                    }
-                    
-                    switch (active) {
-                        case Critter.Centipede:
-                            PlaceCritter(centipede, offsetPos, rotation);
-                    }
-                    PlaceCritter(activeCritter, offsetPos, rotation);
-                    numCritters[activeCritterIdx]--;
-                }
-                else if (IsMoveableTile(offsetPos))
-                {
-                    movePoint = offsetPos;
-                }
+                PlaceCritter(active, offsetPos, offset);
+            }
+            else if (offset.magnitude == 1f && IsMoveableTile(offsetPos))
+            {
+                if (sliding) slideVector = offset;
+                movePoint = offsetPos;
+                // TODO: Play footstep audio
             }
 
             if (Input.GetButtonDown("PlaceCentipede") && numCentipedes > 0)
@@ -126,65 +111,97 @@ public class Player : MonoBehaviour
     }
 
     // Place Critter at given position and rotation, then toggle Critter Mode
-    private void PlaceCritter(Critter critter, Vector3 position, int rotation)
+    private void PlaceCritter(Critter critter, Vector3 position, Vector3 offset)
     {
         GameObject spawnedCritter = null;
         switch (critter)
         {
             case Critter.Centipede:
                 spawnedCritter = Instantiate(centipede, position, Quaternion.identity);
+                // TODO: Play Centipede spawn audio
+                numCentipedes--;
                 break;
             case Critter.WaterBug:
                 spawnedCritter = Instantiate(waterBug, position, Quaternion.identity);
+                // TODO: Play Water Bug spawn audio
+                numWaterBugs--;
                 break;
             case Critter.Fly:
                 spawnedCritter = Instantiate(fly, position, Quaternion.identity);
+                // TODO: Play Fly spawn audio
+                numFlies--;
                 break;
         }
+
+        int rotation = 0;
+        if (offset.x > 0)
+        {
+            rotation = 270;
+        }
+        else if (offset.x < 0)
+        {
+            rotation = 90;
+        }
+        else if (offset.y < 0)
+        {
+            rotation = 180;
+        }
         spawnedCritter.transform.Rotate(0, 0, rotation);
+
         ToggleCritterMode();
     }
 
     // Checks if position is on a moveable tile
     private bool IsMoveableTile(Vector3 position)
     {
-        // For movement:
         // Player can move on ground, mud, holes (if centipede is on top), and water (if water bug is on top)
+        // In other words, player can move anywhere where a centipede or water bug is.
         // Player CANNOT move on out-of-bounds, holes, and water
-        // Centipedes CANNOT be placed on water or out-of-bounds
-        // Water Bugs CANNOT be placed on holes or out-of-bounds
-        // Both can be placed on mud to negate its effects
         bool isGround = Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("Ground"));
         bool isMud = Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("Mud"));
+        bool isCoveredMud = isMud && (Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("Centipede")) || Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("WaterBug")));
         bool isCoveredHole = Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("Hole")) && Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("Centipede"));
         bool isCoveredWater = Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("Water")) && Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("WaterBug"));
+
+        if (isMud && !isCoveredMud)
+        {
+            sliding = true;
+            moveSpeed = 7f;
+        }
+        else
+        {
+            sliding = false;
+            moveSpeed = 5f;
+        }
+
         return isGround || isMud || isCoveredHole || isCoveredWater;
-        // But wait, this means that as long as a ground tile is there, anything is moveable...make a note that each grid space should have at most 1 tile layer normally.
+        // As long as a ground tile is there, anything is moveable...make a note that each grid space should have at most 1 tile layer normally.
     }
 
     // Checks if a ONE-TILE position is a valid critter placement
-    // NOTE: Does not check for multi-tile placements (ahem, Centipede, ahem). How do we address that?
-    private bool IsPlaceableTile(Vector3 position, GameObject critter)
+    // NOTE: Does not check for multi-tile placements (ahem, Centipede, ahem). Needs to be addressed.
+    private bool IsPlaceableTile(Vector3 position)
     {
-        // All critters can be placed on ground, mud, covered holes, and covered water.
-        // Critters CANNOT be placed out-of-bounds
-        // Critters placed on holes or water will normally fall or drown, respectively.
-        // The Water Bug can be placed on water.
-        // The Centipede can be placed on holes.
-        // The Fly can be placed on water or holes, it flies over everything.
+        // Cases:
+        // 1. Ground (placeable)
+        // 2. Mud (placeable)
+        // 3. Out-of-bounds (not placeable)
+        // 4. Hole (only Centipede or Fly placeable)
+        // 5. Water (only Water Bug or Fly placeable)
+        // 6. Covered hole (placeable)
+        // 7. Covered water (placeable)
         bool isGround = Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("Ground"));
         bool isMud = Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("Mud"));
+        bool isHole = Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("Hole"));
+        bool isWater = Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("Water"));
         bool isCoveredHole = Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("Hole")) && Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("Centipede"));
         bool isCoveredWater = Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("Water")) && Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("WaterBug"));
 
-        bool isHole = Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("Hole"));
-        bool isWater = 1;
+        bool isMoveable = isGround || isMud || isCoveredHole || isCoveredWater;
 
-        bool canTryPlace = isGround || isMud || isCoveredHole || isCoveredWater;
+        bool holePlaceableCritter = isHole && (active == Critter.Centipede || active == Critter.Fly);
+        bool waterPlaceableCritter = isWater && (active == Critter.WaterBug || active == Critter.Fly);
 
-        // Critter-specific cases
-        if ()
-
-        return 
+        return isMoveable || holePlaceableCritter || waterPlaceableCritter;
     }
 }
