@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 3477510569666882262}
   - component: {fileID: 7698468808118690672}
   - component: {fileID: 5346095556075237987}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: LevelExit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,6 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockade: {fileID: 2598237300967149738}
+  nextLevelName: 
 --- !u!61 &5346095556075237987
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -191,7 +192,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3678023009911932253}
   - component: {fileID: 4853549445653414171}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ExitSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

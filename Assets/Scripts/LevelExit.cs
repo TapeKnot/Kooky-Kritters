@@ -1,4 +1,6 @@
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class LevelExit : MonoBehaviour
@@ -6,6 +8,7 @@ public class LevelExit : MonoBehaviour
     public static LevelExit instance;
 
     [SerializeField] private SpriteRenderer blockade;
+    [SerializeField] private string nextLevelName;
     private bool unlocked = false;
 
     private void Awake()
@@ -45,7 +48,8 @@ public class LevelExit : MonoBehaviour
 
     private void LevelComplete()
     {
-        Debug.Log("Congratulations! You've completed the level.");
+        SceneManager.LoadSceneAsync(nextLevelName);
+        Destroy(gameObject);
     }
 
 }
