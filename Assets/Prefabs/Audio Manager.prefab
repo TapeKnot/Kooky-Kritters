@@ -437,3 +437,5 @@ MonoBehaviour:
   SFXSource: {fileID: 1554190295824313330}
   footstepsDirt: {fileID: 8300000, guid: d057d2783b2f142228518f0e8e1b4dc4, type: 3}
   gemBreak: {fileID: 8300000, guid: 91770fba576344ed395b971b11fa23f4, type: 3}
+  centipedeStinger: {fileID: 8300000, guid: 978c16cb17c91df43ab6566662bc8245, type: 3}
+  waterBugStinger: {fileID: 8300000, guid: be6337c87cd5d5943a144d430657e4ca, type: 3}

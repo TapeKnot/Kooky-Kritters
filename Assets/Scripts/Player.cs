@@ -117,12 +117,12 @@ public class Player : MonoBehaviour
         {
             case Critter.Centipede:
                 spawnedCritter = Instantiate(centipede, position, Quaternion.identity);
-                // TODO: Play Centipede spawn audio
+                AudioManager.instance.PlaySFX(AudioManager.instance.centipedeStinger);
                 numCentipedes--;
                 break;
             case Critter.WaterBug:
                 spawnedCritter = Instantiate(waterBug, position, Quaternion.identity);
-                // TODO: Play Water Bug spawn audio
+                AudioManager.instance.PlaySFX(AudioManager.instance.waterBugStinger);
                 numWaterBugs--;
                 break;
             case Critter.Fly:

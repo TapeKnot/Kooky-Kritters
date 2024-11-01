@@ -42,7 +42,10 @@ public class LevelExit : MonoBehaviour
     public void UnlockExit()
     {
         unlocked = true;
-        blockade.enabled = false;
+        if (blockade != null)
+        {
+            blockade.enabled = false;
+        }
         Debug.Log("The exit is now unlocked!");
     }
 
