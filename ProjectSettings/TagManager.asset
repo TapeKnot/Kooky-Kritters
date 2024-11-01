@@ -9,16 +9,15 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Walls
+  - Ground
   - Water
   - UI
-  - Obstacle
+  - Hole
+  - Mud
+  - Water
   - Centipede
   - ExitVine
-  - 
-  - 
-  - 
-  - 
+  - WaterBug
   - 
   - 
   - 
@@ -42,6 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 3956098795
+    locked: 0
   - name: Ground
     uniqueID: 1613733989
     locked: 0
@@ -50,9 +52,6 @@ TagManager:
     locked: 0
   - name: Entities
     uniqueID: 604202659
-    locked: 0
-  - name: Walls
-    uniqueID: 3956098795
     locked: 0
   m_RenderingLayers:
   - Default

@@ -105,7 +105,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 604202659
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 10
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0, g: 1, b: 1, a: 1}
@@ -166,21 +166,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6218ce4c6020ce4478f88817734f079f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveableLayers: []
+  unnmoveableLayers: []
   moveSpeed: 5
   critterMode: 0
-  movePoint: {fileID: 6853658271255312889}
-  lookPoint: {fileID: 0}
-  wallLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  centipedeLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  spriteRenderer: {fileID: 7095721840299200953}
+  active: 0
+  numCentipedes: 3
+  numWaterBugs: 3
+  numFlies: 3
   centipede: {fileID: 1684667921504059436, guid: 81bd2598306f22e4bad51145eaeec320, type: 3}
+  waterBug: {fileID: 1684667921504059436, guid: 1cd186784e1a9e24fb6157ce6e6464f9, type: 3}
+  fly: {fileID: 1684667921504059436, guid: e3d61440970d1bc45a59e4592308a4a3, type: 3}
+  spriteRenderer: {fileID: 7095721840299200953}
 --- !u!61 &1701597480740788445
 BoxCollider2D:
   m_ObjectHideFlags: 0
