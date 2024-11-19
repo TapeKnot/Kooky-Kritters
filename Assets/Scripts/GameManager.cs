@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviour
@@ -24,15 +25,16 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        BoundsInt groundBounds = levelGround.cellBounds;
-        float xCam = (groundBounds.xMax - groundBounds.xMin) / 2;
-        float yCam = (groundBounds.yMax - groundBounds.yMin) / 2;
-        cam.transform.position = new Vector3(xCam, yCam, -10);
+        Vector3 bounds = levelGround.cellBounds.center;
+        cam.transform.position = new Vector3(bounds.x, bounds.y, -10);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetButtonDown("Restart"))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 }

@@ -18,8 +18,8 @@ public class Player : MonoBehaviour
     [SerializeField] private enum Critter {Centipede, WaterBug, Fly};
     [SerializeField] private Critter active;
 
-    [SerializeField] private int numCentipedes = 3;
-    [SerializeField] private int numWaterBugs = 3;
+    [SerializeField] public int numCentipedes = 3;
+    [SerializeField] public int numWaterBugs = 3;
     [SerializeField] private int numFlies = 3;
     [SerializeField] private GameObject centipede;
     [SerializeField] private GameObject waterBug;
@@ -28,6 +28,8 @@ public class Player : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
 
     private Vector3 movePoint;
+
+    public static event System.Action<int, int> OnCritterPlace = delegate { };
 
     private void Awake()
     {
@@ -42,6 +44,11 @@ public class Player : MonoBehaviour
         }
 
         movePoint = transform.position;
+    }
+
+    private void Start()
+    {
+        OnCritterPlace(numCentipedes, numWaterBugs);
     }
 
     // Update is called once per frame
@@ -117,12 +124,12 @@ public class Player : MonoBehaviour
         {
             case Critter.Centipede:
                 spawnedCritter = Instantiate(centipede, position, Quaternion.identity);
-                // TODO: Play Centipede spawn audio
+                AudioManager.instance.PlaySFX(AudioManager.instance.centipedeStinger);
                 numCentipedes--;
                 break;
             case Critter.WaterBug:
                 spawnedCritter = Instantiate(waterBug, position, Quaternion.identity);
-                // TODO: Play Water Bug spawn audio
+                AudioManager.instance.PlaySFX(AudioManager.instance.waterBugStinger);
                 numWaterBugs--;
                 break;
             case Critter.Fly:
@@ -148,6 +155,7 @@ public class Player : MonoBehaviour
         spawnedCritter.transform.Rotate(0, 0, rotation);
 
         ToggleCritterMode();
+        OnCritterPlace(numCentipedes, numWaterBugs);
     }
     
 

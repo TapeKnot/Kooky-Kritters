@@ -10,6 +10,8 @@ public class AudioManager : MonoBehaviour
     [Header("---------- Audio Clip ----------")] 
     public AudioClip footstepsDirt;
     public AudioClip gemBreak;
+    public AudioClip centipedeStinger;
+    public AudioClip waterBugStinger;
 
     private void Awake()
     {
