@@ -25,8 +25,10 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        /*
         Vector3 bounds = levelGround.cellBounds.center;
         cam.transform.position = new Vector3(bounds.x, bounds.y, -10);
+        */
     }
 
     // Update is called once per frame

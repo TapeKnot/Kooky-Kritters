@@ -77,9 +77,11 @@ public class Player : MonoBehaviour
                 movePoint += slideVector;
                 // TODO: Play slide audio
             }
-            else if (offset.magnitude == 1f && critterMode && IsPlaceableTile(offsetPos))
+            else if (offset.magnitude == 1f && critterMode)
             {
-                PlaceCritter(active, offsetPos, offset);
+                if ((active == Critter.Centipede && IsPlaceableTile(transform.position)) || IsPlaceableTile(offsetPos)) {
+                    PlaceCritter(active, offsetPos, offset);
+                }
             }
             else if (offset.magnitude == 1f && IsMoveableTile(offsetPos))
             {
@@ -121,7 +123,7 @@ public class Player : MonoBehaviour
                 {
                     centipedeHighlights[i].gameObject.SetActive(true);
 
-                    if (IsPlaceableTile(highlights[i].transform.position) && IsPlaceableTile(centipedeHighlights[i].transform.position)) centipedeHighlights[i].SetColor(0);
+                    if (IsPlaceableTile(transform.position) && IsPlaceableTile(centipedeHighlights[i].transform.position)) centipedeHighlights[i].SetColor(0);
                     else centipedeHighlights[i].SetColor(1);
                 }
             }
@@ -157,7 +159,7 @@ public class Player : MonoBehaviour
         switch (critter)
         {
             case Critter.Centipede:
-                if (!IsPlaceableTile(position + (offset * 3)))
+                if (!IsPlaceableTile(position + (offset * 2)))
                 {
                     return;
                 }
@@ -207,7 +209,7 @@ public class Player : MonoBehaviour
         bool isMud = Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("Mud"));
         bool isCoveredMud = isMud && (Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("Centipede")) || Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("WaterBug")));
         bool isCoveredHole = Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("Hole")) && Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("Centipede"));
-        bool isCoveredWater = Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("Water")) && Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("WaterBug"));
+        bool isCoveredWater = Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("Water")) && (Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("WaterBug")) || Physics2D.OverlapCircle(position, 0.2f, LayerMask.GetMask("Centipede")));
 
         if (isMud && !isCoveredMud)
         {

@@ -6,13 +6,13 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Level 1.unity
+    path: Assets/Scenes/1 Water.unity
     guid: 5ba8457491f6e804e988204c7c462621
   - enabled: 1
-    path: Assets/Scenes/Level 2.unity
+    path: Assets/Scenes/3 Hole.unity
     guid: 06cc37dc2f5fd6f4c845a7e31d9a62b0
   - enabled: 1
-    path: Assets/Scenes/Level 3.unity
+    path: Assets/Scenes/4 Hole & Water.unity
     guid: 2ff8205c8e3efbd4b95c851e8dcb1b72
   - enabled: 1
     path: Assets/Scenes/Level MEGA.unity
