@@ -696,6 +696,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grid
       objectReference: {fileID: 0}
+    - target: {fileID: 423707555504908168, guid: e183a8a0e3899ab46bf62dbc7c073d8d, type: 3}
+      propertyPath: m_TagString
+      value: Holes
+      objectReference: {fileID: 0}
     - target: {fileID: 580048068816729908, guid: e183a8a0e3899ab46bf62dbc7c073d8d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1215,6 +1219,18 @@ PrefabInstance:
     - target: {fileID: 1630175751269417417, guid: e183a8a0e3899ab46bf62dbc7c073d8d, type: 3}
       propertyPath: m_Tiles.Array.data[23].second.m_TileObjectToInstantiateIndex
       value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 2678197481262825245, guid: e183a8a0e3899ab46bf62dbc7c073d8d, type: 3}
+      propertyPath: m_TagString
+      value: Water
+      objectReference: {fileID: 0}
+    - target: {fileID: 2859267982903655298, guid: e183a8a0e3899ab46bf62dbc7c073d8d, type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
+    - target: {fileID: 3070831816959231544, guid: e183a8a0e3899ab46bf62dbc7c073d8d, type: 3}
+      propertyPath: m_TagString
+      value: Mud
       objectReference: {fileID: 0}
     - target: {fileID: 4935216470952335998, guid: e183a8a0e3899ab46bf62dbc7c073d8d, type: 3}
       propertyPath: m_Size.x

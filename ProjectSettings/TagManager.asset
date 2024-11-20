@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 3
   tags:
   - Audio
+  - Ground
+  - Holes
+  - Mud
+  - Water
   layers:
   - Default
   - TransparentFX
@@ -18,6 +22,7 @@ TagManager:
   - Centipede
   - ExitVine
   - WaterBug
+  - 
   - 
   - 
   - 

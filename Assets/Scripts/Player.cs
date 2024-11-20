@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -26,6 +27,9 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject fly;
 
     [SerializeField] private SpriteRenderer spriteRenderer;
+
+    [SerializeField] private List<Highlight> highlights;
+    [SerializeField] private List<Highlight> centipedeHighlights;
 
     private Vector3 movePoint;
 
@@ -86,18 +90,18 @@ public class Player : MonoBehaviour
 
             if (Input.GetButtonDown("PlaceCentipede") && numCentipedes > 0)
             {
-                ToggleCritterMode();
                 active = Critter.Centipede;
+                ToggleCritterMode();
             }
             else if (Input.GetButtonDown("PlaceWaterBug") && numWaterBugs > 0)
             {
-                ToggleCritterMode();
                 active = Critter.WaterBug;
+                ToggleCritterMode();
             }
             else if (Input.GetButtonDown("PlaceFly") && numFlies > 0)
             {
-                ToggleCritterMode();
                 active = Critter.Fly;
+                ToggleCritterMode();
             }
         }
     }
@@ -109,10 +113,40 @@ public class Player : MonoBehaviour
         if (critterMode)
         {
             spriteRenderer.color = Color.yellow;
+
+            // Spawn semi-transparent yellow squares adjacent to where the player can place critters
+            if (active == Critter.Centipede)
+            {
+                for (int i = 0; i < centipedeHighlights.Count; i++)
+                {
+                    centipedeHighlights[i].gameObject.SetActive(true);
+
+                    if (IsPlaceableTile(highlights[i].transform.position) && IsPlaceableTile(centipedeHighlights[i].transform.position)) centipedeHighlights[i].SetColor(0);
+                    else centipedeHighlights[i].SetColor(1);
+                }
+            }
+            else
+            {
+                foreach (Highlight highlight in highlights)
+                {
+                    highlight.gameObject.SetActive(true);
+
+                    if (IsPlaceableTile(highlight.transform.position)) highlight.SetColor(0);
+                    else highlight.SetColor(1);
+                }
+            }
         }
         else
         {
             spriteRenderer.color = Color.cyan;
+
+            foreach (Highlight highlight in highlights) {
+                highlight.gameObject.SetActive(false);
+            }
+            foreach (Highlight highlight in centipedeHighlights)
+            {
+                highlight.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -123,6 +157,10 @@ public class Player : MonoBehaviour
         switch (critter)
         {
             case Critter.Centipede:
+                if (!IsPlaceableTile(position + (offset * 3)))
+                {
+                    return;
+                }
                 spawnedCritter = Instantiate(centipede, position, Quaternion.identity);
                 AudioManager.instance.PlaySFX(AudioManager.instance.centipedeStinger);
                 numCentipedes--;
@@ -207,9 +245,9 @@ public class Player : MonoBehaviour
 
         bool isMoveable = isGround || isMud || isCoveredHole || isCoveredWater;
 
-        bool holePlaceableCritter = isHole && (active == Critter.Centipede || active == Critter.Fly);
+        //bool holePlaceableCritter = isHole && (active == Critter.Centipede || active == Critter.Fly);
         bool waterPlaceableCritter = isWater && (active == Critter.WaterBug || active == Critter.Fly);
 
-        return isMoveable || holePlaceableCritter || waterPlaceableCritter;
+        return isMoveable || waterPlaceableCritter;
     }
 }
