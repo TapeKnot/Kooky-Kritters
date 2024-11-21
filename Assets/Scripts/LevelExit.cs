@@ -7,7 +7,8 @@ public class LevelExit : MonoBehaviour
 {
     public static LevelExit instance;
 
-    [SerializeField] private SpriteRenderer blockade;
+    [SerializeField] private SpriteRenderer sprite;
+    [SerializeField] private Sprite openSprite;
     [SerializeField] private string nextLevelName;
     private bool unlocked = false;
 
@@ -42,10 +43,7 @@ public class LevelExit : MonoBehaviour
     public void UnlockExit()
     {
         unlocked = true;
-        if (blockade != null)
-        {
-            blockade.enabled = false;
-        }
+        sprite.sprite = openSprite;
         Debug.Log("The exit is now unlocked!");
     }
 
