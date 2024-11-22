@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,7 +10,6 @@ public class LevelExit : MonoBehaviour
 
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Sprite openSprite;
-    [SerializeField] private string nextLevelName;
     private bool unlocked = false;
 
     private void Awake()
@@ -48,7 +49,8 @@ public class LevelExit : MonoBehaviour
 
     private void LevelComplete()
     {
-        SceneManager.LoadSceneAsync(nextLevelName);
+        int nextLevel = SceneManager.GetActiveScene().buildIndex + 1;
+        SceneManager.LoadSceneAsync(nextLevel);
         Destroy(gameObject);
     }
 

@@ -6,28 +6,28 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/1 Water.unity
+    path: Assets/Scenes/1 Time to Get Kooky.unity
     guid: 5ba8457491f6e804e988204c7c462621
   - enabled: 1
-    path: Assets/Scenes/2 Water+.unity
+    path: Assets/Scenes/2 Aquatic Boogaloo.unity
     guid: 3030e098ca887534f8d37031f69733bf
   - enabled: 1
-    path: Assets/Scenes/3 Hole.unity
+    path: Assets/Scenes/3 Bridging the Gap.unity
     guid: 06cc37dc2f5fd6f4c845a7e31d9a62b0
   - enabled: 1
-    path: Assets/Scenes/4 Hole & Water.unity
+    path: Assets/Scenes/4 Gauntlet.unity
     guid: 2ff8205c8e3efbd4b95c851e8dcb1b72
   - enabled: 1
-    path: Assets/Scenes/5 Mud.unity
+    path: Assets/Scenes/5 Stormy Night.unity
     guid: 2d621ef2edf499140a3f42be3671f4f0
   - enabled: 1
-    path: Assets/Scenes/6 Slip n' Slide.unity
-    guid: efa3690b0d51257459b80e9dcdd0ea34
-  - enabled: 1
-    path: Assets/Scenes/Level MEGA.unity
+    path: Assets/Scenes/6 A Grounded Approach.unity
     guid: d395c924ce01dea4bbc159cfdecea4ef
   - enabled: 1
-    path: Assets/Scenes/Thing.unity
+    path: Assets/Scenes/[A] Slip n' Slide.unity
+    guid: efa3690b0d51257459b80e9dcdd0ea34
+  - enabled: 1
+    path: Assets/Scenes/[B] Building Bridges.unity
     guid: e0096d19176265e4dabe008c72152a63
   - enabled: 1
     path: Assets/Scenes/Win.unity

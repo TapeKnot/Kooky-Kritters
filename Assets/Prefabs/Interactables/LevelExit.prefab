@@ -48,7 +48,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 4853549445653414171}
   openSprite: {fileID: 21300000, guid: 4a28caee150689a4888816950c0b1e74, type: 3}
-  nextLevelName: 
+  sceneList:
+  - m_Handle: 0
+  - m_Handle: 0
 --- !u!61 &5346095556075237987
 BoxCollider2D:
   m_ObjectHideFlags: 0
