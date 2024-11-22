@@ -2,12 +2,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
-public class GameManager : MonoBehaviour
+public class MenuManager : MonoBehaviour
 {
-    public static GameManager instance;
-
-    [SerializeField] private Transform cam;
-    [SerializeField] private Tilemap levelGround;
+    public static MenuManager instance;
 
     private void Awake()
     {
@@ -34,9 +31,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Restart"))
+        if (Input.GetButtonDown("Start"))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            int nextLevel = SceneManager.GetActiveScene().buildIndex + 1;
+            SceneManager.LoadSceneAsync(nextLevel);
         }
         if (Input.GetButtonDown("Exit"))
         {

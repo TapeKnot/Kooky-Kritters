@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/0 Menu.unity
+    guid: 4435e33fd302ca94ba7f8cc8805c8b8c
+  - enabled: 1
     path: Assets/Scenes/1 Time to Get Kooky.unity
     guid: 5ba8457491f6e804e988204c7c462621
   - enabled: 1
