@@ -53,4 +53,9 @@ public class LevelExit : MonoBehaviour
         Destroy(gameObject);
     }
 
+    private void OnDestroy()
+    {
+        SpaceGem.OnSpaceGemDestroy -= UnlockExit;
+    }
+
 }

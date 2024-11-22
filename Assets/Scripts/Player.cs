@@ -179,20 +179,23 @@ public class Player : MonoBehaviour
                 break;
         }
 
-        int rotation = 0;
-        if (offset.x > 0)
+        if (critter == Critter.Centipede)
         {
-            rotation = 270;
+            int rotation = 0;
+            if (offset.x > 0)
+            {
+                rotation = 270;
+            }
+            else if (offset.x < 0)
+            {
+                rotation = 90;
+            }
+            else if (offset.y < 0)
+            {
+                rotation = 180;
+            }
+            spawnedCritter.transform.Rotate(0, 0, rotation);
         }
-        else if (offset.x < 0)
-        {
-            rotation = 90;
-        }
-        else if (offset.y < 0)
-        {
-            rotation = 180;
-        }
-        spawnedCritter.transform.Rotate(0, 0, rotation);
 
         ToggleCritterMode();
         OnCritterPlace(numCentipedes, numWaterBugs);
