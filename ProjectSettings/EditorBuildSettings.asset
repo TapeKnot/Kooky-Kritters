@@ -27,6 +27,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Level MEGA.unity
     guid: d395c924ce01dea4bbc159cfdecea4ef
   - enabled: 1
+    path: Assets/Scenes/Thing.unity
+    guid: e0096d19176265e4dabe008c72152a63
+  - enabled: 1
     path: Assets/Scenes/Win.unity
     guid: 81c1f1a4513125148af0247467bf768d
   m_configObjects:

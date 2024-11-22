@@ -12,7 +12,7 @@ public class CritterText : MonoBehaviour
 
     private void UpdateText(int centipedeNum, int waterBugNum)
     {
-        Debug.Log(centipedeNum + ", " + waterBugNum);
-        text.text = "Centipedes: " + centipedeNum + "\nWater Bugs: " + waterBugNum;
+        Debug.Log(waterBugNum + ", " + centipedeNum);
+        text.text = "Water Bugs: " + waterBugNum + "\nCentipedes: " + centipedeNum;
     }
 }

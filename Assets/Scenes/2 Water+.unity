@@ -185,7 +185,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3458137565953629260, guid: 5f6d8d826f79599409581b7e7a324dd1, type: 3}
       propertyPath: numWaterBugs
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3458137565953629260, guid: 5f6d8d826f79599409581b7e7a324dd1, type: 3}
       propertyPath: numCentipedes
