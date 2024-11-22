@@ -129,7 +129,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3939598152984267382, guid: 1f3ca22fe5526434d98ab38c502c7ee1, type: 3}
       propertyPath: orthographic size
-      value: 7.96875
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 3939598152984267382, guid: 1f3ca22fe5526434d98ab38c502c7ee1, type: 3}
       propertyPath: m_NormalizedViewPortRect.x
@@ -192,6 +192,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f3ca22fe5526434d98ab38c502c7ee1, type: 3}
+--- !u!20 &341094729 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 3939598152984267382, guid: 1f3ca22fe5526434d98ab38c502c7ee1, type: 3}
+  m_PrefabInstance: {fileID: 341094728}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &356288715
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -460,6 +465,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4621156949613054415, guid: 23b7ee37c596dab4eb04fe60cf19d89a, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 341094729}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
