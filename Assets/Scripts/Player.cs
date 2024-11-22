@@ -90,6 +90,8 @@ public class Player : MonoBehaviour
                 if (sliding) slideVector = offset;
                 movePoint = offsetPos;
                 AudioManager.instance.PlaySFX(AudioManager.instance.footstepsDirt);
+                if (offset.x == -1) spriteRenderer.flipX = false;
+                else if (offset.x == 1) spriteRenderer.flipX = true;
             }
 
             if (Input.GetButtonDown("PlaceCentipede") && numCentipedes > 0)

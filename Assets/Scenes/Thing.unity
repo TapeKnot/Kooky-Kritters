@@ -180,6 +180,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f3ca22fe5526434d98ab38c502c7ee1, type: 3}
+--- !u!20 &35998767 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 3939598152984267382, guid: 1f3ca22fe5526434d98ab38c502c7ee1, type: 3}
+  m_PrefabInstance: {fileID: 35998766}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &356288715
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -243,7 +248,7 @@ PrefabInstance:
     - target: {fileID: 3458137565953629260, guid: 5f6d8d826f79599409581b7e7a324dd1, type: 3}
       propertyPath: vineBlock
       value: 
-      objectReference: {fileID: 1788447999}
+      objectReference: {fileID: 0}
     - target: {fileID: 3458137565953629260, guid: 5f6d8d826f79599409581b7e7a324dd1, type: 3}
       propertyPath: numWaterBugs
       value: 4
@@ -356,11 +361,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8876362223842198071, guid: 5f6d8d826f79599409581b7e7a324dd1, type: 3}
   m_PrefabInstance: {fileID: 356288715}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1788447999 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2987652833681650342, guid: 15f74dd0f8ffca04ca18f784959d0854, type: 3}
-  m_PrefabInstance: {fileID: 6747373832193681919}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2097040489
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -453,6 +453,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4621156949613054415, guid: 23b7ee37c596dab4eb04fe60cf19d89a, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 35998767}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -481,7 +485,7 @@ PrefabInstance:
     - target: {fileID: 1152117979665226178, guid: 4f6c2b10ce5c7154ab1d25782ed93c61, type: 3}
       propertyPath: vineBlock
       value: 
-      objectReference: {fileID: 1788447999}
+      objectReference: {fileID: 0}
     - target: {fileID: 2974462024762594182, guid: 4f6c2b10ce5c7154ab1d25782ed93c61, type: 3}
       propertyPath: m_Name
       value: SpaceGem
