@@ -108,7 +108,7 @@ SpriteRenderer:
   m_SortingLayer: 4
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: dad471ad6c7f0c64ea29ed6bd702f281, type: 3}
-  m_Color: {r: 0, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -218,6 +218,8 @@ MonoBehaviour:
   waterBug: {fileID: 1684667921504059436, guid: 1cd186784e1a9e24fb6157ce6e6464f9, type: 3}
   fly: {fileID: 1684667921504059436, guid: e3d61440970d1bc45a59e4592308a4a3, type: 3}
   spriteRenderer: {fileID: 7095721840299200953}
+  normalSprite: {fileID: 21300000, guid: dad471ad6c7f0c64ea29ed6bd702f281, type: 3}
+  critterModeSprite: {fileID: 21300000, guid: 447294163a27afc40946bbb703bd5791, type: 3}
   highlights:
   - {fileID: 2820292237847028100}
   - {fileID: 7819078149060207642}

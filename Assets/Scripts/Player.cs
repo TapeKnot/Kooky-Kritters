@@ -27,6 +27,8 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject fly;
 
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Sprite normalSprite;
+    [SerializeField] private Sprite critterModeSprite;
 
     [SerializeField] private List<Highlight> highlights;
     [SerializeField] private List<Highlight> centipedeHighlights;
@@ -114,7 +116,7 @@ public class Player : MonoBehaviour
 
         if (critterMode)
         {
-            spriteRenderer.color = Color.yellow;
+            spriteRenderer.sprite = critterModeSprite;
 
             // Spawn semi-transparent yellow squares adjacent to where the player can place critters
             if (active == Critter.Centipede)
@@ -140,7 +142,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            spriteRenderer.color = Color.cyan;
+            spriteRenderer.sprite = normalSprite;
 
             foreach (Highlight highlight in highlights) {
                 highlight.gameObject.SetActive(false);
